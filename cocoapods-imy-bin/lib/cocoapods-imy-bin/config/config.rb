@@ -12,8 +12,8 @@ module CBin
     def template_hash
       {
           'configuration_env' => { description: '编译环境', default: 'dev', selection: %w[dev debug_iphoneos release_iphoneos] },
-          'code_repo_url' => { description: '源码私有源 Git 地址', default: 'https://github.com/su350380433/example_spec_source' },
-          'binary_repo_url' => { description: '二进制私有源 Git 地址', default: 'https://github.com/su350380433/example_spec_bin_dev' },
+          'code_repo_urls' => { description: '源码私有源 Git 地址', default: %w[https://git.yy.com/autotest/ci_team/cocoapods/Code-Specs.git https://git.yy.com/opensource/ios_team/Spec.git] },
+          'binary_repo_urls' => { description: '二进制私有源 Git 地址', default: %w[https://git.yy.com/autotest/ci_team/cocoapods/Binary-Specs.git https://git.yy.com/ci_team/Specs.git] },
           'binary_download_url' => { description: '二进制下载地址，内部会依次传入组件名称与版本，替换字符串中的 %s ', default: 'http://third-repo.yy.com/frameworks/%s/%s/zip' },
           # 'binary_type' => { description: '二进制打包类型', default: 'framework', selection: %w[framework library] },
           'download_file_type' => { description: '下载二进制文件类型', default: 'zip', selection: %w[zip tgz tar tbz txz dmg] }
@@ -94,7 +94,6 @@ module CBin
 
     def config
       @config ||= begin
-                    puts "====== cocoapods-imy-bin #{CBin::VERSION} 版本 ======== \n"
                     @config = OpenStruct.new load_config
         validate!
         @config
